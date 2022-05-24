@@ -13,7 +13,7 @@ Download songs from your favorite playlists for free!
  - Click on 'Create an App' give it some name and description and click on create.
  - You will be presented with an interface something like:
  ![Home Page](https://github.com/Hole0Hunter/Spotify-Playlist-Downloader/blob/main/developer.spotify.com%20home%20screen.png?raw=true)
-- Your Client ID and Client Secret are important and are not to be kept _SECRET_
+- Your Client ID and Client Secret are important and are to be kept _SECRET_
 
 ### Setting up the code:
 - In the code, put your Client ID and Client Secret in ```cid``` and ```secret``` variables respectively.
