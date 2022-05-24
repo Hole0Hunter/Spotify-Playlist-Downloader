@@ -50,7 +50,7 @@ def DownloadMP3(video_URL):
 
     print("Download complete... {}".format(filename))
     
-def TryDownloadAgain(video_URL, numOfTries):
+def TryDownloadAgain(video_URL, numOfTries, failedDownloads):
     try:
         numOfTries += 1
         DownloadMP3(video_URL = video_URL)
@@ -61,16 +61,20 @@ def TryDownloadAgain(video_URL, numOfTries):
             TryDownloadAgain(video_URL = video_URL, numOfTries = numOfTries)
         else:
             numOfTries = 0
+            failedDownloads.append(video_URL)
             print("Too many failures...")
 
 def main():
     # Step 1 (Get your cid and secret from spotify api website)
-    cid = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-    secret = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+    # cid = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    # secret = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+    cid = input("Enter Client ID (32 characters): ")
+    secret = input("Enter Client Secret (32 characters): ")
     # Authenticate without user
     sp = AuthenticationWithoutUser(cid = cid, secret = secret)
     
-    myPlaylist = "https://open.spotify.com/playlist/1O3GYgbm803IfXaes7mrwW?si=e4d257582bdb4e27"
+    # myPlaylist = "https://open.spotify.com/playlist/1O3GYgbm803IfXaes7mrwW?si=e4d257582bdb4e27"
+    myPlaylist = input("Enter Spotify Playlist URL: ")
     myPlaylistURI = myPlaylist.split("/")[-1].split("?")[0]
     
     # Add track names and artist names to a list so we can use them further
@@ -82,7 +86,7 @@ def main():
     for track in track_details:
         # Example: searchQuery = The Rumbling SiM -> https://www.youtube.com/results?search_query=The+Rumbling+SiM
         searchQuery = track + " " + track_details[track]
-        processedSearchQuery = searchQuery.replace(" ", "+")
+        processedSearchQuery = searchQuery.replace(" ", "+") + "+lyrics"
         # processedSearchQuery = processedSearchQuery.encode("utf-8")
         print(processedSearchQuery)
         html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + quote(processedSearchQuery))
@@ -103,8 +107,13 @@ def main():
     os.mkdir(dir)
     
     numOfTries = 0
+    failedDownloads = []
     for video_URL in track_links:
-        TryDownloadAgain(video_URL = video_URL, numOfTries = numOfTries)
+        TryDownloadAgain(video_URL = video_URL, numOfTries = numOfTries, failedDownloads = failedDownloads)
+    
+    print("The following tracks could not be downloaded: ")
+    for i in range(len(failedDownloads)):
+        print(i)
     
 if __name__ == "__main__":
     main()
