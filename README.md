@@ -31,6 +31,7 @@ Download songs from your favorite playlists for free!
 ## Future Work:
 I would like to spend some time fine tuning some of the features in the project like:
 - Adding a command line input system for Client ID, Client Secret and Playlist link.
+- Some original music videos on youtube have extra parts in the beginning and the end, to deal with that problem, adding "lyrics" at the end of the youtube search query should have better chances of eliminating the extra parts.
 - At the end of a run, show the user which songs failed to download, so that the user can atleast find a manual method to download the songs.
 - Please feel free to fork this project and use it for your own purposes.
 - You can also open issues or suggest new features. I'll look into them. :smile:
